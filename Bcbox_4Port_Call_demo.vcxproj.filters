@@ -1,0 +1,58 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="资源文件">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="src">
+      <UniqueIdentifier>{64a8a8a9-06ef-4f54-a77c-04107621d5b4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\bcbox_4port">
+      <UniqueIdentifier>{fdf85f5f-8212-4585-b261-7790bf8a9740}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\Bcbox_Mouse_adaptation">
+      <UniqueIdentifier>{fd6416ef-7e90-4c57-bf63-641780f1c65e}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="src\main.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\bcbox_4port\hid.c">
+      <Filter>src\bcbox_4port</Filter>
+    </ClCompile>
+    <ClCompile Include="src\bcbox_4port\rsa.c">
+      <Filter>src\bcbox_4port</Filter>
+    </ClCompile>
+    <ClCompile Include="src\bcbox_4port\test.c">
+      <Filter>src\bcbox_4port</Filter>
+    </ClCompile>
+    <ClCompile Include="src\bcbox_4port\bcbox_4port.cpp">
+      <Filter>src\bcbox_4port</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Bcbox_Mouse_adaptation\Bcbox_Mouse_adaptation.cpp">
+      <Filter>src\Bcbox_Mouse_adaptation</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="src\bcbox_4port\hidapi.h">
+      <Filter>src\bcbox_4port</Filter>
+    </ClInclude>
+    <ClInclude Include="src\bcbox_4port\HidTable.h">
+      <Filter>src\bcbox_4port</Filter>
+    </ClInclude>
+    <ClInclude Include="src\bcbox_4port\rsa.h">
+      <Filter>src\bcbox_4port</Filter>
+    </ClInclude>
+    <ClInclude Include="src\bcbox_4port\tamp.h">
+      <Filter>src\bcbox_4port</Filter>
+    </ClInclude>
+    <ClInclude Include="src\bcbox_4port\bcbox_4port.h">
+      <Filter>src\bcbox_4port</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Bcbox_Mouse_adaptation\Bcbox_Mouse_adaptation.h">
+      <Filter>src\Bcbox_Mouse_adaptation</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>
