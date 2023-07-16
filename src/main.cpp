@@ -402,8 +402,33 @@ void Mouse_adaptation()
 	
 }
 
+void bc_is_connect()
+{
+	while (true)
+	{
+		bool status = BC_is_device_valid();
+		printf("status %d \n", status);
+		if (status == 0) {
+			status = BC_init(0x1a86,0xfe00);
+			if (status == 0) {
+				BC_EnableMonitor(1); 
+			}
+		}
+
+		Sleep(2000);
+	}
+
+}
+
 int main()
 {
+
+	bc_is_connect();
+	return 0;
+
+	new_main();
+	return 0;
+
 	Mouse_adaptation();
 	return 0;
 
