@@ -113,30 +113,28 @@ vk_key  :鼠标左键状态设置，0：松开  1：按下
 是否测试：是 --test
 
 */
-int BC_left(char port,unsigned char vk_key)
-{	int i;
+int BC_left(unsigned char vk_key)
+{
+	int i;
 	WaitForSingleObject(bc_m_hMutex_lock_write, INFINITE); // Lock the mutex here
 	data_mouse.reserved = 0X00;
-	data_mouse.cmd=0x03;
-	data_mouse.port=port;
-	if(vk_key)	
-		data_mouse.button |=BIT0; //左键按下
-	else 
-		data_mouse.button &=~BIT0;//左键松开
-	data_mouse.x=0;
-	data_mouse.y=0;
-	data_mouse.wheel=0;
-	i=hid_write(fd_bcbox,(const unsigned char *)&data_mouse,65);
+	data_mouse.cmd = 0x03;
+	data_mouse.port = 0x00;
+	if (vk_key)
+		data_mouse.button |= BIT0; //左键按下
+	else
+		data_mouse.button &= ~BIT0;//左键松开
+	data_mouse.x = 0;
+	data_mouse.y = 0;
+	data_mouse.wheel = 0;
+	i = hid_write(fd_bcbox, (const unsigned char*)&data_mouse, 65);
 
 	if (i == 65)
 	{
-		if ((port & 0x03)==0x03)//向两个端口发送数据最好延迟2ms.保证对应的PC口数据被拾取。
-			sleep_hi(2);
-		else
-			sleep_hi(1);//向一个端口发数据延迟1ms
+		sleep_hi(1);//向一个端口发数据延迟1ms
 	}
 	ReleaseMutex(bc_m_hMutex_lock_write);
-	return i==65?0:-1;
+	return i == 65 ? 0 : -1;
 }
 
 /*
@@ -149,12 +147,12 @@ vk_key  :鼠标中键状态设置，0：松开  1：按下
 		 0：发送成功
 是否测试：是 --test
 */
-int BC_middle(char port,unsigned char vk_key)
+int BC_middle(unsigned char vk_key)
 {	int i;
 	WaitForSingleObject(bc_m_hMutex_lock_write, INFINITE); // Lock the mutex here
 	data_mouse.reserved = 0X00;
 	data_mouse.cmd=0x03;
-	data_mouse.port=port;
+	data_mouse.port=0x00;
 	if(vk_key)	
 		data_mouse.button |=BIT2;
 	else 
@@ -165,9 +163,6 @@ int BC_middle(char port,unsigned char vk_key)
 	i=hid_write(fd_bcbox,(const unsigned char *)&data_mouse,65);
 	if (i == 65)
 	{
-		if ((port & 0x03) == 0x03)//向两个端口发送数据最好延迟2ms.保证对应的PC口数据被拾取。
-			sleep_hi(2);
-		else
 			sleep_hi(1);//向一个端口发数据延迟1ms
 	}
 	ReleaseMutex(bc_m_hMutex_lock_write);
@@ -184,12 +179,12 @@ vk_key  :鼠标右键状态设置，0：松开  1：按下
 		 0：发送成功
 是否测试：是 --test
 */
-int BC_right(char port,unsigned char vk_key)
+int BC_right(unsigned char vk_key)
 {	int i;
 	WaitForSingleObject(bc_m_hMutex_lock_write, INFINITE); // Lock the mutex here
 	data_mouse.reserved = 0X00;
 	data_mouse.cmd=0x03;
-	data_mouse.port=port;
+	data_mouse.port=0x00;
 	if(vk_key)	
 		data_mouse.button |=BIT1;
 	else 
@@ -200,9 +195,6 @@ int BC_right(char port,unsigned char vk_key)
 	i=hid_write(fd_bcbox,(const unsigned char *)&data_mouse,65);
 	if (i == 65)
 	{
-		if ((port & 0x03) == 0x03)//向两个端口发送数据最好延迟2ms.保证对应的PC口数据被拾取。
-			sleep_hi(2);
-		else
 			sleep_hi(1);//向一个端口发数据延迟1ms
 	}
 	ReleaseMutex(bc_m_hMutex_lock_write);
@@ -247,13 +239,13 @@ vk_key  :鼠标侧键1状态设置，0：松开  1：按下
 是否测试：是 --test
 */
 
-int BC_side1(char port, unsigned char  vk_key)
+int BC_side1( unsigned char  vk_key)
 {
 	int i;
 	WaitForSingleObject(bc_m_hMutex_lock_write, INFINITE); // Lock the mutex here
 	data_mouse.reserved = 0X00;
 	data_mouse.cmd = 0x03;
-	data_mouse.port = port;
+	data_mouse.port = 0x00;
 	if (vk_key)
 		data_mouse.button |= BIT3;
 	else
@@ -264,9 +256,6 @@ int BC_side1(char port, unsigned char  vk_key)
 	i = hid_write(fd_bcbox, (const unsigned char*)&data_mouse, 65);
 	if (i == 65)
 	{
-		if ((port & 0x03) == 0x03)//向两个端口发送数据最好延迟2ms.保证对应的PC口数据被拾取。
-			sleep_hi(2);
-		else
 			sleep_hi(1);//向一个端口发数据延迟1ms
 	}
 	ReleaseMutex(bc_m_hMutex_lock_write);
@@ -281,13 +270,13 @@ vk_key  :鼠标侧键2状态设置，0：松开  1：按下
 		 0：发送成功
 是否测试：是 --test
 */
-int BC_side2(char port, unsigned char  vk_key)
+int BC_side2(unsigned char  vk_key)
 {
 	int i;
 	WaitForSingleObject(bc_m_hMutex_lock_write, INFINITE); // Lock the mutex here
 	data_mouse.reserved = 0X00;
 	data_mouse.cmd = 0x03;
-	data_mouse.port = port;
+	data_mouse.port = 0x00;
 	if (vk_key)
 		data_mouse.button |= BIT4;
 	else
@@ -298,9 +287,6 @@ int BC_side2(char port, unsigned char  vk_key)
 	i = hid_write(fd_bcbox, (const unsigned char*)&data_mouse, 65);
 	if (i == 65)
 	{
-		if ((port & 0x03) == 0x03)//向两个端口发送数据最好延迟2ms.保证对应的PC口数据被拾取。
-			sleep_hi(2);
-		else
 			sleep_hi(1);//向一个端口发数据延迟1ms
 	}
 	ReleaseMutex(bc_m_hMutex_lock_write);
@@ -729,6 +715,34 @@ int BC_EnableMonitor(char enable){
 
 	ReleaseMutex(bc_m_hMutex_lock_write);
 	return i == 64 ? 0 : -1;
+}
+
+int BC_EnableMonitor_Dll(char enable) {
+	int i;
+	WaitForSingleObject(bc_m_hMutex_lock_write, INFINITE); // Lock the mutex here
+	data_listen_t.reserved = 0x00;
+	data_listen_t.cmd = 0x07;
+	data_listen_t.enable = enable; //是否使能标志
+	i = hid_write(fd_bcbox, (const unsigned char*)&data_listen_t, 65);
+	if (i == 65) Sleep(1);
+	memset(bc_status.buf, 0, sizeof(bc_status.buf));
+
+	ReleaseMutex(bc_m_hMutex_lock_write);
+	return i == 64 ? 0 : -1;
+}
+
+//传入指针获取数据
+int BC_Monitor_Data(uint8_t* data)
+{
+	//sleep_hi(1); //每隔1ms读取一次 高精度延时
+	WaitForSingleObject(bc_m_hMutex_lock_read, INFINITE); // Lock the mutex here
+	int i = hid_read_timeout(fd_bcbox, data, 64, 10);
+	ReleaseMutex(bc_m_hMutex_lock_read);
+	if (i == 64)
+	{
+		return 1;
+	}
+	return 0;
 }
 
 /*

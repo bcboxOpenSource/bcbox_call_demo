@@ -122,7 +122,7 @@ vk_key  :鼠标左键状态设置，0：松开  1：按下
 		 0：发送成功
 是否测试：是 --test
 ***********************************************************/
- BCBOX_DLL_API  int BC_left(char port,unsigned char vk_key);
+ BCBOX_DLL_API  int BC_left(unsigned char vk_key);
 
  /***********************************************************
 鼠标中键控制：
@@ -133,7 +133,7 @@ vk_key  :鼠标中键状态设置，0：松开  1：按下
 		 0：发送成功
 是否测试：是 --test
 ***********************************************************/
- BCBOX_DLL_API  int BC_middle(char port,unsigned char vk_key);
+ BCBOX_DLL_API  int BC_middle(unsigned char vk_key);
 
 
  /***********************************************************
@@ -145,7 +145,7 @@ vk_key  :鼠标右键状态设置，0：松开  1：按下
 		 0：发送成功
 是否测试：是 --test
 ***********************************************************/
-BCBOX_DLL_API  int BC_right(char port,unsigned char vk_key);
+BCBOX_DLL_API  int BC_right(unsigned char vk_key);
 
 
 /***********************************************************
@@ -161,7 +161,7 @@ y		:y方向相对偏移量[-32767,32767]
 BCBOX_DLL_API  int BC_move(short x,short y);
 
 
-BCBOX_DLL_API  int BC_side1(char port,unsigned char  vk_key);
+BCBOX_DLL_API  int BC_side1(unsigned char  vk_key);
 
 /***********************************************************
 鼠标侧键2控制：
@@ -172,7 +172,7 @@ vk_key : 鼠标侧键2状态设置，0：松开  1：按下
 0  ：发送成功
 是否测试：是 --test
 ***********************************************************/
-BCBOX_DLL_API  int BC_side2(char port,unsigned char  vk_key);
+BCBOX_DLL_API  int BC_side2(unsigned char  vk_key);
 
 
 // 已测试 可用 time:2023-06-26 不过这个是rtos专属固件 ------------------- 
@@ -224,6 +224,10 @@ enable :0：关闭监控   1：打开监控
 读取外接键鼠的状态。
 *************************************************************/
 int BC_EnableMonitor(char enable);
+
+BCBOX_DLL_API int BC_EnableMonitor_Dll(char enable); // 提供给dll打开监听的功能
+
+BCBOX_DLL_API int BC_Monitor_Data(uint8_t * data); // 提供给dll读取状态的功能
 
 
 /**********************************************************

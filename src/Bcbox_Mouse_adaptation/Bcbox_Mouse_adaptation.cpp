@@ -56,12 +56,11 @@ void Bcbox_Mouse_adaptation::start_jianting()
 		while (this->Monitoring_status)
 		{
 			// 设置连接状态
-			this->connect_status = BC_is_device_valid();
+			this->connect_status = BC_is_device_valid() == 1;
 
 			// 如果没有连接 尝试重连
-			if (!this->connect_status)
+			if (this->connect_status == 0)
 			{
-
 				printf("尝试重连 \n");
 				int status_init = BC_init(0x1a86, 0xFE00);
 				if (status_init == 0)
@@ -71,7 +70,8 @@ void Bcbox_Mouse_adaptation::start_jianting()
 			}
 
 			// 更新端口连接状态
-			BC_Get_EndP_Connection_Status(buff);
+			if(this->connect_status)
+				BC_Get_EndP_Connection_Status(buff);
 			
 
 		/*	for (int i = 0; i < 20; i++) {
@@ -80,15 +80,9 @@ void Bcbox_Mouse_adaptation::start_jianting()
 
 			printf("\n");*/
 			
-			this->endp1_status = buff[0] == 0x02;
-			this->endp2_status = buff[1] == 0x02;
-			/*if (this->connect_status)
-			{
-				
-			}*/
-		
+			this->endp1_status = this->connect_status ? buff[0] == 0x02 : false;
+			this->endp2_status = this->connect_status ? buff[1] == 0x02 : false;
 
-			// 2s 更新一次
 			Sleep(2000);
 		}
 
