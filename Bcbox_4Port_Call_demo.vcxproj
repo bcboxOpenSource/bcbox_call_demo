@@ -42,9 +42,6 @@
     <ClInclude Include="src\bcbox_4port\tamp.h" />
     <ClInclude Include="src\Bcbox_Mouse_adaptation\Bcbox_Mouse_adaptation.h" />
   </ItemGroup>
-  <ItemGroup>
-    <None Include="cpp.hint" />
-  </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>

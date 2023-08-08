@@ -819,6 +819,97 @@ int BC_Monitor_Mouse(int vk)
 	return bc_status.km.mstatus & vk ? 1 : 0;
 }
 
+
+
+// 获取鼠标的报告描述符
+int BC_Get_Mouse_report_desc(unsigned char* addr, int page)
+{
+	unsigned char buff[65] = { 0 };
+	WaitForSingleObject(bc_m_hMutex_lock_write, INFINITE); // Lock the mutex here
+	hex16_pack_data.reserved = 0x00;
+	hex16_pack_data.cmd = 0x17; // 获取数据的cmd标识符
+	hex16_pack_data.select = 0x02;
+	hex16_pack_data.status = page;
+	hid_write(fd_bcbox, (const unsigned char*)&hex16_pack_data, 65);
+	hid_read_timeout(fd_bcbox, buff, 65, 1000);
+
+	memcpy(addr, buff, sizeof(buff));
+	ReleaseMutex(bc_m_hMutex_lock_write);
+	return 1;
+}
+
+
+// 获取鼠标映射值
+int BC_Get_Mouse_map(unsigned char* addr)
+{
+	unsigned char buff[65] = { 0 };
+	WaitForSingleObject(bc_m_hMutex_lock_write, INFINITE); // Lock the mutex here
+	hex16_pack_data.reserved = 0x00;
+	hex16_pack_data.cmd = 0x17; // 获取数据的cmd标识符
+	hex16_pack_data.select = 0x03;
+	hid_write(fd_bcbox, (const unsigned char*)&hex16_pack_data, 65);
+	hid_read_timeout(fd_bcbox, buff, 65, 1000);
+
+	memcpy(addr, buff, sizeof(buff));
+	ReleaseMutex(bc_m_hMutex_lock_write);
+	return 1;
+}
+
+// 获取键盘的报告描述符
+int BC_Get_Kbd_report_desc(unsigned char* addr, int page)
+{
+	unsigned char buff[65] = { 0 };
+	WaitForSingleObject(bc_m_hMutex_lock_write, INFINITE); // Lock the mutex here
+	hex16_pack_data.reserved = 0x00;
+	hex16_pack_data.cmd = 0x17; // 获取数据的cmd标识符
+	hex16_pack_data.select = 0x04;
+	hex16_pack_data.status = page;
+	hid_write(fd_bcbox, (const unsigned char*)&hex16_pack_data, 65);
+	hid_read_timeout(fd_bcbox, buff, 65, 1000);
+
+	memcpy(addr, buff, sizeof(buff));
+	ReleaseMutex(bc_m_hMutex_lock_write);
+	return 1;
+}
+
+
+// 获取键盘映射值
+int BC_Get_Kbd_map(unsigned char* addr)
+{
+	unsigned char buff[65] = { 0 };
+	WaitForSingleObject(bc_m_hMutex_lock_write, INFINITE); // Lock the mutex here
+	hex16_pack_data.reserved = 0x00;
+	hex16_pack_data.cmd = 0x17; // 获取数据的cmd标识符
+	hex16_pack_data.select = 0x05;
+	hid_write(fd_bcbox, (const unsigned char*)&hex16_pack_data, 65);
+	hid_read_timeout(fd_bcbox, buff, 65, 1000);
+
+	memcpy(addr, buff, sizeof(buff));
+	ReleaseMutex(bc_m_hMutex_lock_write);
+	return 1;
+}
+
+int BC_keyboard(unsigned char ctrButton, unsigned char* key)
+{
+	int i;
+	WaitForSingleObject(bc_m_hMutex_lock_write, INFINITE);
+	data_keyboard.reserved = 0X00;
+	data_keyboard.cmd = 0x04;
+	data_keyboard.ctrButton = ctrButton;//控制键
+
+	for (i = 0; i < 6; i++)
+	{
+		data_keyboard.data[i] = key[i];
+	}
+	i = hid_write(fd_bcbox, (const unsigned char*)&data_keyboard, 65);
+	if (i == 65)
+	{
+		Sleep(1);//向一个端口发数据延迟1ms
+	}
+	ReleaseMutex(bc_m_hMutex_lock_write);
+	return i == 65 ? 0 : -1;
+}
+
 /*
 查询物理键盘指定按键是否按下 --只有开启了BC_EnableMonitor（1）后才能使用
 输入：		vk_key 要查询的HID键值  详见HID键值表

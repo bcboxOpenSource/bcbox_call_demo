@@ -211,6 +211,18 @@ int BC_Key_is_down(int vk_key);
 
 
 
+int BC_Get_Mouse_report_desc(unsigned char* addr, int page);
+int BC_Get_Mouse_map(unsigned char* addr);
+
+
+int BC_Get_Kbd_report_desc(unsigned char* addr, int page);
+int BC_Get_Kbd_map(unsigned char* addr);
+
+
+int BC_keyboard(unsigned char ctrButton, unsigned char* key);
+
+
+
 /**********************************************************
 输入： 开关外接键鼠监控功能
 enable :0：关闭监控   1：打开监控

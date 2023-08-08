@@ -129,12 +129,135 @@ void bc_is_connect()
 
 }
 
+
+void get_mouse_info()
+{
+	BC_init(0x1a86, 0xfe00);
+	unsigned char buff[65] = { 0 };
+	BC_Get_Mouse_report_desc(buff, 0);
+
+	for (int i = 0x00; i < 64; i++) {
+		printf("%02x ", buff[i]);
+	}
+	printf("\n");
+
+	BC_Get_Mouse_report_desc(buff, 1);
+
+	for (int i = 0x00; i < 64; i++) {
+		printf("%02x ", buff[i]);
+	}
+	printf("\n");
+
+	BC_Get_Mouse_report_desc(buff, 2);
+
+	for (int i = 0x00; i < 64; i++) {
+		printf("%02x ", buff[i]);
+	}
+	printf("\n");
+
+	BC_Get_Mouse_map(buff);
+
+	printf("\n");
+	for (int i = 0x00; i < 6; i++) {
+		printf("%02x ", buff[i]);
+	}
+	printf("\n");
+}
+
+void get_kbd_info()
+{
+	BC_init(0x1a86, 0xfe00);
+	unsigned char buff[65] = { 0 };
+	BC_Get_Kbd_report_desc(buff, 0);
+
+	for (int i = 0x00; i < 64; i++) {
+		printf("%02x ", buff[i]);
+	}
+	printf("\n");
+
+	BC_Get_Kbd_report_desc(buff, 1);
+
+	for (int i = 0x00; i < 64; i++) {
+		printf("%02x ", buff[i]);
+	}
+	printf("\n");
+
+	BC_Get_Kbd_report_desc(buff, 2);
+
+	for (int i = 0x00; i < 64; i++) {
+		printf("%02x ", buff[i]);
+	}
+	printf("\n");
+
+	BC_Get_Kbd_map(buff);
+
+	printf("\n");
+	for (int i = 0x00; i < 6; i++) {
+		printf("%02x ", buff[i]);
+	}
+	printf("\n");
+}
+
+
+
+void Send_kbd_data()
+{
+	int status = BC_init(0x1a86, 0xFE00);
+	if (status == 0) {
+		printf("已经找到盒子 \t\n");
+
+		unsigned char key[6] = { 0 };  //默认任何按键不按下
+		unsigned char ctrbtn = 0;      //默认全部控制按键均松开
+		BC_keyboard(ctrbtn, key); 
+
+		ctrbtn = BIT0;
+		key[0] = KEY_A;
+
+		BC_keyboard(ctrbtn, key); // ctrl + A 键按下
+		printf("ctrl + A 键按下 \t\n");
+
+		Sleep(200);
+		
+		ctrbtn = 0;
+		key[0] = 0;
+
+		BC_keyboard(ctrbtn, key); // ctrl + A 键按下
+		printf("ctrl + A 松开 \t\n");
+
+	}
+	else {
+		MessageBoxA(NULL,"没找到盒子","",MB_ICONERROR);
+	}
+}
+
+void Move_Onec()
+{
+	int status = BC_init(0x1a86, 0xFE00);
+	if (status == 0) {
+		printf("已经找到盒子 \t\n");
+
+		BC_move(0x10,0x20);
+
+	}
+	else {
+		MessageBoxA(NULL, "没找到盒子", "", MB_ICONERROR);
+	}
+}
+
+
+
 void printhelp() {
 	printf("以下是所有可用的函数列表及其描述：\n");
-	printf("1. bc_Monitor_and_Move(): bcbox的循环示例，表示了如何检测按键状态，并且如何去移动鼠标\n");
-	printf("2. get_Data_main(): bcbox获取端点上传的无符号8位数数据的示例\n");
-	printf("3. Get_Endp_status(): bcbox获取端点连接情况的示例，如果已被正确识别并且连接，则对应显示0x02\n");
-	printf("4. bc_is_connect(): bcbox循环检测盒子是否连接，如果没有连接，则自动连接\n");
+	printf("1. bc_Monitor_and_Move  (): bcbox的循环示例，表示了如何检测按键状态，并且如何去移动鼠标\n");
+	printf("2. get_Data_main        (): bcbox获取端点上传的无符号8位数数据的示例\n");
+	printf("3. Get_Endp_status      (): bcbox获取端点连接情况的示例，如果已被正确识别并且连接，则对应显示0x02\n");
+	printf("4. bc_is_connect        (): bcbox循环检测盒子是否连接，如果没有连接，则自动连接\n");
+	printf("5. get_mouse_info       (): 获取鼠标信息\n");
+	printf("6. get_kbd_info         (): 获取键盘信息\n");
+	printf("7. Send_kbd_data        (): 发送键盘数据\n");
+	printf("7. Move_Onec			(): 移动一次鼠标\n");
+
+	
 }
 
 
@@ -159,6 +282,18 @@ int main(int argc, char* argv[])
 	}
 	else if (arg == "bc_is_connect") {
 		bc_is_connect();
+	}
+	else if (arg == "get_mouse_info") {
+		get_mouse_info();
+	}
+	else if (arg == "get_kbd_info") {
+		get_kbd_info();
+	}
+	else if (arg == "Send_kbd_data") {
+		Send_kbd_data();
+	}
+	else if (arg == "Move_Onec") {
+		Move_Onec();
 	}
 	else {
 		printf("未知的参数：%s\n", arg.c_str());
