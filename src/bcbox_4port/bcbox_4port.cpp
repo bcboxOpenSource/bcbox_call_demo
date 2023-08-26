@@ -64,6 +64,11 @@ int BC_init(unsigned short vid,unsigned short pid)
 	return 0;
 }
 
+int BC_init_default()
+{
+	return BC_init(0x1a86, 0xFE00);
+}
+
 int BC_is_device_valid() {
 	if (fd_bcbox == NULL)
 	{
@@ -202,18 +207,11 @@ int BC_right(unsigned char vk_key)
 }
 
 
-/*
-鼠标移动控制：
-port	:往哪个端口发数据,只往port1发数据为1,只往port2发数据为2，两个端口都发数据为3
-x		:x方向相对偏移量[-32767,32767]
-y		:y方向相对偏移量[-32767,32767]
-返回值：
-		-1：发送失败
-		 0：发送成功
-是否测试：是 --test
-*/
 int BC_move(short x, short y)
 {
+	/*char show[20];
+	sprintf(show,"hwnd %d ", bc_m_hMutex_lock_write);
+	MessageBoxA(NULL, show,"",MB_OK);*/
 	WaitForSingleObject(bc_m_hMutex_lock_write, INFINITE); // Lock the mutex here
 	int i;
 	data_mouse.reserved = 0X00;
@@ -229,15 +227,6 @@ int BC_move(short x, short y)
 	return i == 65 ? 0 : -1;
 }
 
-/*
-鼠标侧键1控制：
-port	:往哪个端口发数据,只往port1发数据为1,只往port2发数据为2，两个端口都发数据为3
-vk_key  :鼠标侧键1状态设置，0：松开  1：按下
-返回值：
-		-1：发送失败
-		 0：发送成功
-是否测试：是 --test
-*/
 
 int BC_side1( unsigned char  vk_key)
 {

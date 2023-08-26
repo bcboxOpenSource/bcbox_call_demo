@@ -110,6 +110,7 @@ void sleep_hi(int i); // 高精度延时
 测试时间：20221224  
 *************************************************************/
 BCBOX_DLL_API  int BC_init(unsigned short vid,unsigned short pid);
+BCBOX_DLL_API  int BC_init_default();
 
 
  

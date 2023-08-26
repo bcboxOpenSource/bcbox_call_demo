@@ -244,7 +244,18 @@ void Move_Onec()
 	}
 }
 
+void sk_left() {
+	int status = BC_init(0x1a86, 0xFE00);
+	if (status == 0) {
+		printf("已经找到盒子 \t\n");
 
+		BC_left(1);
+
+	}
+	else {
+		MessageBoxA(NULL, "没找到盒子", "", MB_ICONERROR);
+	}
+}
 
 void printhelp() {
 	printf("以下是所有可用的函数列表及其描述：\n");
@@ -255,14 +266,13 @@ void printhelp() {
 	printf("5. get_mouse_info       (): 获取鼠标信息\n");
 	printf("6. get_kbd_info         (): 获取键盘信息\n");
 	printf("7. Send_kbd_data        (): 发送键盘数据\n");
-	printf("7. Move_Onec			(): 移动一次鼠标\n");
-
-	
+	printf("8. Move_Onec		(): 移动一次鼠标\n");
 }
 
 
 int main(int argc, char* argv[])
 {
+	Move_Onec();
 	if (argc < 2)
 	{
 		printf("没有提供足够的参数。请提供函数名称作为参数。\n");
