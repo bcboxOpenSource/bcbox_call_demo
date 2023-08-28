@@ -64,6 +64,29 @@ int BC_init(unsigned short vid,unsigned short pid)
 	return 0;
 }
 
+BCBOX_DLL_API std::string BC_get_bcbox_path(unsigned short vid, unsigned short pid)
+{
+	hid_device_info* hid_info;
+	
+	hid_info = hid_enumerate(vid, pid);
+
+	do {
+		if (hid_info == NULL) return"";
+		if (hid_info->usage_page == 0xff00)
+		{
+			break;
+		}
+		else
+			hid_info = hid_info->next;
+	} while (1);
+	return hid_info->path;
+	if (!fd_bcbox) {
+		fd_bcbox = NULL;
+		return "";
+	}
+	return std::string();
+}
+
 int BC_init_default()
 {
 	return BC_init(0x1a86, 0xFE00);
@@ -668,9 +691,7 @@ DWORD WINAPI BC_ThreadListenProcess(LPVOID lpParameter)
 		{
 			memcpy(&bc_status,ret.buf,64);
 		}
-		
-		
-
+			
 		ReleaseMutex(bc_m_hMutex_lock_read);
 	}
 	handle_listen = NULL;//关闭监听
@@ -718,6 +739,20 @@ int BC_EnableMonitor_Dll(char enable) {
 
 	ReleaseMutex(bc_m_hMutex_lock_write);
 	return i == 64 ? 0 : -1;
+}
+
+int BC_EnableMonitor_Dll_int(int enable) {
+	int i;
+	WaitForSingleObject(bc_m_hMutex_lock_write, INFINITE); // Lock the mutex here
+	data_listen_t.reserved = 0x00;
+	data_listen_t.cmd = 0x07;
+	data_listen_t.enable = enable; //是否使能标志
+	i = hid_write(fd_bcbox, (const unsigned char*)&data_listen_t, 65);
+	if (i == 65) Sleep(1);
+	memset(bc_status.buf, 0, sizeof(bc_status.buf));
+
+	ReleaseMutex(bc_m_hMutex_lock_write);
+	return i == 65 ? 0 : -1;
 }
 
 //传入指针获取数据

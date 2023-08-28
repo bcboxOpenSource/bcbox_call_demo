@@ -110,6 +110,7 @@ void sleep_hi(int i); // 高精度延时
 测试时间：20221224  
 *************************************************************/
 BCBOX_DLL_API  int BC_init(unsigned short vid,unsigned short pid);
+BCBOX_DLL_API  std::string BC_get_bcbox_path(unsigned short vid, unsigned short pid);
 BCBOX_DLL_API  int BC_init_default();
 
 
@@ -239,6 +240,7 @@ enable :0：关闭监控   1：打开监控
 int BC_EnableMonitor(char enable);
 
 BCBOX_DLL_API int BC_EnableMonitor_Dll(char enable); // 提供给dll打开监听的功能
+BCBOX_DLL_API int BC_EnableMonitor_Dll_int(int enable); // 提供给dll打开监听的功能
 
 BCBOX_DLL_API int BC_Monitor_Data(uint8_t * data); // 提供给dll读取状态的功能
 

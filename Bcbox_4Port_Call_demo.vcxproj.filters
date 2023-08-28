@@ -14,6 +14,9 @@
     <Filter Include="src\Bcbox_Mouse_adaptation">
       <UniqueIdentifier>{fd6416ef-7e90-4c57-bf63-641780f1c65e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="src\bcbox_simple_call">
+      <UniqueIdentifier>{72426bd0-bb98-429e-8e63-f9fea761aea2}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\main.cpp">
@@ -34,6 +37,9 @@
     <ClCompile Include="src\Bcbox_Mouse_adaptation\Bcbox_Mouse_adaptation.cpp">
       <Filter>src\Bcbox_Mouse_adaptation</Filter>
     </ClCompile>
+    <ClCompile Include="src\bcbox_simple_call\bcbox_simple_call.cpp">
+      <Filter>src\bcbox_simple_call</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\bcbox_4port\hidapi.h">
@@ -53,6 +59,9 @@
     </ClInclude>
     <ClInclude Include="src\Bcbox_Mouse_adaptation\Bcbox_Mouse_adaptation.h">
       <Filter>src\Bcbox_Mouse_adaptation</Filter>
+    </ClInclude>
+    <ClInclude Include="src\bcbox_simple_call\bcbox_simple_call.h">
+      <Filter>src\bcbox_simple_call</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

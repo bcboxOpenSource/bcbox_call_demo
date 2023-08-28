@@ -32,6 +32,7 @@
     <ClCompile Include="src\bcbox_4port\rsa.c" />
     <ClCompile Include="src\bcbox_4port\test.c" />
     <ClCompile Include="src\Bcbox_Mouse_adaptation\Bcbox_Mouse_adaptation.cpp" />
+    <ClCompile Include="src\bcbox_simple_call\bcbox_simple_call.cpp" />
     <ClCompile Include="src\main.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -41,6 +42,7 @@
     <ClInclude Include="src\bcbox_4port\rsa.h" />
     <ClInclude Include="src\bcbox_4port\tamp.h" />
     <ClInclude Include="src\Bcbox_Mouse_adaptation\Bcbox_Mouse_adaptation.h" />
+    <ClInclude Include="src\bcbox_simple_call\bcbox_simple_call.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
@@ -198,7 +200,7 @@
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalDependencies>winmm.lib;Setupapi.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <OutputFile>work</OutputFile>
+      <OutputFile>$(OutDir)$(TargetName)$(TargetExt)</OutputFile>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Exp_dll|x64'">

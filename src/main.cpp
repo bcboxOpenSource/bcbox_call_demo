@@ -12,6 +12,7 @@
 
 #include "bcbox_4port/bcbox_4port.h"       //添加头文件
 #include "bcbox_4port/HidTable.h"    //添加头文件
+#include "bcbox_simple_call/bcbox_simple_call.h"
 
 
 /// <summary>
@@ -270,9 +271,25 @@ void printhelp() {
 }
 
 
+// 易语言调用bcbox的示例
+void e_lang_call()
+{
+	bool status = bcbox_simple_init();
+
+	if (status)
+	{
+		/*printf("打开成功 调用移动 \t\n");
+		bcbox_simple_move(300, 30);*/
+		bcbox_simple_enable_monitor();
+		bcbox_left_is_down();
+	}
+
+}
+
 int main(int argc, char* argv[])
 {
-	Move_Onec();
+	e_lang_call();
+	return 0;
 	if (argc < 2)
 	{
 		printf("没有提供足够的参数。请提供函数名称作为参数。\n");
